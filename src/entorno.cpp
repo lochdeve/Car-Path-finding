@@ -1,6 +1,6 @@
 #include "../include/entorno.hpp"
 
-//Constructor
+// Constructor
 Entorno::Entorno(int fila, int columna) {
   filas_ = fila;
   columnas_ = columna;
@@ -36,9 +36,9 @@ Entorno::Entorno(std::string nombre_fichero) {
   std::ifstream fich_in;
   fich_in.open(nombre_fichero, std::ios::in);
   if (fich_in.is_open()) {
-    std::cout << "El fichero se ha abierto\n";
+    std::cout << "The file is open\n";
   } else {
-    std::cout << "El fichero no se ha abierto\n";
+    std::cout << "The file can not be open\n";
   }
   int x_ini, y_ini, x_fin, y_fin;
   fich_in >> filas_ >> columnas_ >> x_ini >> y_ini >> x_fin >> y_fin;
@@ -83,7 +83,7 @@ Entorno::Entorno(std::string nombre_fichero) {
   matriz_entorno[x_fin][y_fin].set_tipo(2);
 
   fich_in.close();
-  ventana = new sf::RenderWindow(dimension, "Entorno", sf::Style::Titlebar | sf::Style::Close);
+  ventana = new sf::RenderWindow(dimension, "Environment", sf::Style::Titlebar | sf::Style::Close);
   ventana->setFramerateLimit(60);
 }
 
@@ -176,22 +176,22 @@ void Entorno::renderizarEntorno() {
     for (int j = 0; j < columnas_; j++) {
       cuadrado.setPosition(j * 20, i * 20);
       switch (matriz_entorno[i][j].get_tipo()) {
-        case 0:  //casilla normal
+        case 0:  // casilla normal
           cuadrado.setFillColor(sf::Color(112, 128, 144));
           break;
-        case 1:  //start
+        case 1:  // start
           cuadrado.setFillColor(sf::Color::Green);
           break;
-        case 2:  //finish
+        case 2:  // finish
           cuadrado.setFillColor(sf::Color::Red);
           break;
-        case 3:  //obstaculo
+        case 3:  // obstaculo
           cuadrado.setFillColor(sf::Color::Yellow);
           break;
-        case 4:  //camino
+        case 4:  // camino
           cuadrado.setFillColor(sf::Color::White);
           break;
-        case 5:  //visitado
+        case 5:  // visitado
           cuadrado.setFillColor(sf::Color(13, 71, 161));
           break;
         case 6:
@@ -212,7 +212,7 @@ void Entorno::renderizar() {
 
   // entorno
   renderizarEntorno();
-  //mostrar pantalla
+  // mostrar pantalla
   ventana->display();
 }
 
@@ -311,22 +311,22 @@ void Entorno::actualizarCasillas() {
 // Explicacion de como editar el entorno
 void guia_edicion() {
   std::cout << std::endl;
-  std::cout << "--------------Guia-de-edicion-de-entorno--------------\n";
-  std::cout << "\U0001F6EB Ctrl+Click-Derecho: Punto de partida" << std::endl;
-  std::cout << "\U0001F6EC Ctrl+Click-Izquierdo: Punto de destino" << std::endl;
-  std::cout << "\U000026F0  Click-Derecho: Colocar obstaculos" << std::endl;
-  std::cout << "\U0001F4A5 Click-Izquierdo: Quitar obstaculos" << std::endl;
-  std::cout << "\U0001F4C8 Enter: Calcular camino optimo" << std::endl;
-  std::cout << "\U0001F501 R: Restaurar entorno para volver a inicializar" << std::endl;
-  std::cout << "\U0001F3D7  C: Restaurar entorno sin quitar obstaculos" << std::endl;
-  std::cout << "\U0001F51A Esc: Terminar ejecución del programa" << std::endl;
+  std::cout << "--------------Environment-Editor's-Guide--------------\n";
+  std::cout << "\U0001F6EB Ctrl+Click-Derecho: Starting point" << std::endl;
+  std::cout << "\U0001F6EC Ctrl+Click-Izquierdo: Destination point" << std::endl;
+  std::cout << "\U000026F0  Click-Derecho: Placing obstacles" << std::endl;
+  std::cout << "\U0001F4A5 Click-Izquierdo: Removing obstacles" << std::endl;
+  std::cout << "\U0001F4C8 Enter: Calculate optimal path" << std::endl;
+  std::cout << "\U0001F501 R: Restore environment to re-initialise" << std::endl;
+  std::cout << "\U0001F3D7  C: Restore environment without removing obstacles" << std::endl;
+  std::cout << "\U0001F51A Esc: Terminate programme execution" << std::endl;
   std::cout << std::endl;
 }
 
 // Sirve para que el usuario vea las opciones que tiene e inicializa la ventana
 void Entorno::inicializacion_manual() {
   guia_edicion();
-  ventana = new sf::RenderWindow(dimension, "Entorno", sf::Style::Titlebar | sf::Style::Close);
+  ventana = new sf::RenderWindow(dimension, "Environment", sf::Style::Titlebar | sf::Style::Close);
   ventana->setFramerateLimit(60);
 }
 
@@ -337,12 +337,12 @@ void Entorno::inicializacion_auto(bool opcion) {
   int i = 1, j = 1, x = 0, y = 0, numero_random = 0;
   if (opcion == true) {
     do {
-      std::cout << "Introduzca el punto de partida: \n";
+      std::cout << "Enter the starting point: \n";
       std::cout << "i: ";
       std::cin >> i;
       std::cout << "j: ";
       std::cin >> j;
-      std::cout << "Introduzca el punto de llegada: \n";
+      std::cout << "Enter the arrival point: \n";
       std::cout << "i: ";
       std::cin >> x;
       std::cout << "j: ";
@@ -358,7 +358,7 @@ void Entorno::inicializacion_auto(bool opcion) {
   }
 
   do {
-    std::cout << "Introduzca el porcentaje de obstaculos que quieres: ";
+    std::cout << "Enter the percentage of obstacles you want: ";
     std::cin >> porcentaje_;
   } while (porcentaje_ < 0 && porcentaje_ > 100);
 
@@ -371,28 +371,28 @@ void Entorno::inicializacion_auto(bool opcion) {
   }
 
   guia_edicion();
-  ventana = new sf::RenderWindow(dimension, "Entorno", sf::Style::Titlebar | sf::Style::Close);
+  ventana = new sf::RenderWindow(dimension, "Environment", sf::Style::Titlebar | sf::Style::Close);
   ventana->setFramerateLimit(60);
 }
 
-//muestra la matriz por la terminal usado para testear al principio
+// muestra la matriz por la terminal usado para testear al principio
 std::ostream &Entorno::write(std::ostream &os) const {
   for (int i = 0; i < filas_; i++) {
     for (int j = 0; j < columnas_; j++) {
       switch (matriz_entorno[i][j].get_tipo()) {
-        case 0:  //casilla normal
+        case 0:  // casilla normal
           os << "\u2B1B";
           break;
-        case 1:  //start
+        case 1:  // start
           os << "\U0001F535";
           break;
-        case 2:  //finish
+        case 2:  // finish
           os << "\U0001F534";
           break;
-        case 3:  //obstaculo
+        case 3:  // obstaculo
           os << "\U0000274C";
           break;
-        case 4:  //camino
+        case 4:  // camino
           os << "\U0001F698";
           break;
         default:
